@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./main.css">
+    <title>SearchCharIndex</title>
+</head>
+<body>
+    <div id="result">
+
+    </div>
+</body>
+<script>
+        window.addEventListener("load", start);
+
+    const $result = document.getElementById("result");
+
+    function start()
+    {
+        console.log("loaded!");
+        let mainString = getMainString();
+        let guessChar = getGuessChar();
+
+        getResult(mainString, guessChar, 0);
+    }
+
+    function getMainString(){
+       return window.prompt("input data");
+    }
+
+    function getGuessChar()
+    {
+        return window.prompt("input a char to search");
+    }
+
+    var resultStr = "";
+    function getResult(mainString, guessChar, index)
+    {
+        let startIndex = mainString.indexOf(guessChar, index);
+        let endIndex = mainString.lastIndexOf(guessChar);
+
+        if(endIndex == startIndex)
+        {
+            $result.insertAdjacentHTML('beforeend', `
+                <div>${endIndex}</div>
+            `);
+            return;
+        }else
+        {
+            $result.insertAdjacentHTML('beforeend', `
+                <div>${startIndex}</div>
+            `);
+            return getResult(mainString, guessChar, startIndex+1);
+        }    
+    }
+</script>
