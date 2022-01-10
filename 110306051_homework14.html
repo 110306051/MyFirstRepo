@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./main.css">
+	<title>roll dies game</title>
+</head>
+<body>
+	<form action="#">
+		<input id="rollBtn" type="button" value="Roll Dice">
+	</form>
+	<div style="margin-top: 10px;">
+		<img id="die1" src="die1.png" alt="die1">
+		<img id="die2" src="die1.png" alt="die2">
+		<img id="die3" src="die1.png" alt="die3">
+		<img id="die4" src="die1.png" alt="die4">
+		<img id="die5" src="die1.png" alt="die5">
+		<img id="die6" src="die1.png" alt="die6">
+	</div>
+	<div style="margin-top: 10px;">
+		<img id="die7" src="die1.png" alt="die1">
+		<img id="die8" src="die1.png" alt="die2">
+		<img id="die9" src="die1.png" alt="die3">
+		<img id="die10" src="die1.png" alt="die4">
+		<img id="die11" src="die1.png" alt="die5">
+		<img id="die12" src="die1.png" alt="die6">
+	</div>
+	<table id="resultTable" style="margin-top: 10px;">
+		<thead>
+			<tr>
+				<td>Face</td>
+				<td>Frequency</td>
+				<td>Percent</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script>
+		var dieNum = [0, 0, 0, 0, 0, 0];
+		var $table = document.getElementById("resultTable");
+
+		function start() {
+			var btn = document.getElementById("rollBtn");
+			btn.addEventListener("click", rollDice);
+		}
+
+		function rollDice() {
+			setAllImage(12);
+		}
+
+		function setAllImage(count) {
+			for(let i=1; i<=count; i++)
+			{
+				let dice = document.getElementById(`die${i}`);
+				let rand = Math.floor(Math.random()*6 + 1);
+				dice.setAttribute("src", `die${rand}.png`);
+				calculateFrequency(rand);		
+			}
+			setTable();
+		}
+	
+		function calculateFrequency(point)
+		{
+			switch(point){
+				case 1:
+					dieNum[point-1]++;
+					break;
+				case 2:
+					dieNum[point-1]++;
+					break;
+				case 3:
+					dieNum[point-1]++;
+					break;
+				case 4:
+					dieNum[point-1]++;
+					break;
+				case 5:
+					dieNum[point-1]++;
+					break;
+				case 6:
+					dieNum[point-1]++;
+					break;
+			}
+		}
+
+		function setTable()
+		{
+			let sum = 0;
+			dieNum.forEach(num => {
+				sum+=num;
+			});
+
+			for(let i=0; i<dieNum.length; i++)
+			{
+				//frequency
+				$table.querySelector(`tbody > tr:nth-child(${i+1}) > td:nth-child(2)`).innerHTML=`
+					${dieNum[i]}
+				`;
+			
+				//percent
+				$table.querySelector(`tbody > tr:nth-child(${i+1}) > td:nth-child(3)`).innerHTML=`
+					${Math.floor((dieNum[i]/sum)*10000)/100}
+				`;
+			}
+			
+		}
+
+		window.addEventListener("load", start);
+	</script>
+</body>
+</html>
